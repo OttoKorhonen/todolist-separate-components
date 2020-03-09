@@ -6,26 +6,4 @@ table{
   margin-left:auto;
   margin-right:auto;
 }
-#input-container{
-border-style: solid;
-border-color: gray;
-padding-block: 1em;
-}
 
-#list-container{
-  align-items: center;
-  border-style: solid ;
-  border-top: transparent;
-  border-left: transparent;
-  border-right: transparent;
-  border-width: 2px;
-  border-color: lightgrey;
-}
-
-h1{
-  background-color: black;
-  color: white;
-  padding-top: 1em;
-  padding-bottom: 1em;
-  margin-top: 0;
-}

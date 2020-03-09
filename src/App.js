@@ -1,8 +1,9 @@
 import React from 'react';
 import './App.css';
-import Todotable from './components/todolist';
+import ReactTable from 'react-table-v6';
+import 'react-table-v6/react-table.css';
 
-function App() {
+export default function App() {
   const [description, setDescription] = React.useState({ Description: '', Date: '' });
   const [todo, setTodo] = React.useState([]);
 
@@ -15,25 +16,37 @@ function App() {
     setDescription({ ...description, [event.target.name]: event.target.value })
   }
 
-  const deleteItem = (event) =>{
-    setTodo(todo.filter((todo, i) => i !== parseInt(event.target.id)))
-    console.log(event.target.id)
-}
+  const deleteItem = (row) => {
+    setTodo(todo.filter((todo, index) => index !== row))
+  }
+
+  const columns = [
+    {
+      Header: 'Description',
+      accessor: 'description'
+    },
+    {
+      Header: 'Date',
+      accessor: 'date'
+    },
+    {
+      filterable: false,
+      sortable: false,
+      minWidth: 30,
+      Cell: row => <button onClick={() => deleteItem(row.index)}>Delete</button>
+    }
+  ]
 
   return (
-    <div className="App">
-      <h1>To do list</h1>
-      <form onSubmit={addTodo} id="input-container">
-        <fieldset>
-          <legend>Add to do</legend>
-        Description: <input type="text" name="description" onChange={inputChanged} value={todo.description}></input>
-        Date: <input type="date" name="date" onChange={inputChanged} value={todo.date}></input>
-        <input type="submit" value="Add"></input>
-        </fieldset>
-      </form>
-      <Todotable todo={todo} description={description} deleteItem={deleteItem} />
+    <div className='App'>
+      <label>Description</label>
+      <input type="text" name="description" onChange={inputChanged} value={todo.description}></input>
+      <label>Date</label>
+      <input type="date" name="date" onChange={inputChanged} value={todo.date}></input>
+      <button onClick={addTodo}>Add</button>
+      <ReactTable columns={columns} data={todo} defaultPageSize={10} filterable={true}/>
     </div>
   );
 }
 
-export default App;
+
